@@ -14,6 +14,7 @@ If space is limited, prioritize completing instructions over extras.
 // Initialize Groq client (browser mode)
 const groq = new Groq({
     apiKey: import.meta.env.VITE_GROQ_API_KEY, // your Groq API key
+    dangerouslyAllowBrowser: true, // allows client-side usage
 });
 
 export async function getRecipeFromGroq(ingredientsArr) {
