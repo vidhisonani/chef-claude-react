@@ -76,4 +76,3 @@ VITE_GROQ_API_KEY=your_api_key_here
 ```bash
 npm run dev
 ```
->>>>>>> d745b45153f66eeb7763dfa15f826c057cb65cc7
