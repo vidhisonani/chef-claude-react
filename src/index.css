@@ -5,7 +5,6 @@
 * {
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   font-family: Inter, sans-serif;
@@ -44,8 +43,7 @@ main {
   padding: 9px 13px;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
   min-width: 0;
-}
-
+} 
 .add-ingredient-form > button {
   font-family: Inter, sans-serif;
   border-radius: 6px;
@@ -126,17 +124,12 @@ h3 {
   .get-recipe-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 8px;
-    background: #f0efeb;
-    padding: 10px 28px;
   }
   .add-ingredient-form {
     flex-direction: column;
   }
   .add-ingredient-form > button {
-    width: 50vw;
+    /* width: 50vw; */
     margin: auto;
     padding: 10px 20px;
   }
