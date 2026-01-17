@@ -1,13 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 :root {
   --headFontColor: hsl(216, 18%, 24%);
   --secFontColor: hsl(216, 18%, 34%);
 }
 * {
   box-sizing: border-box;
+  font-family: Inter, sans-serif;
 }
 body {
   margin: 0;
-  font-family: Inter, sans-serif;
   background-color: #fafaf8;
 }
 .header {
