@@ -4,6 +4,8 @@ Chef Claude is a **full-stack AI web application** built with **React** on the f
 
 The project started as a frontend-only learning exercise and was later refactored into a **monorepo full-stack architecture** — with a secure backend that protects API keys and handles all AI communication.
 
+🌐 **Live Demo:** [Chef Claude](https://chef-claude-react-five.vercel.app)
+
 ---
 
 ## 🚀 Features
