@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import IngredientsList from "./IngredientsList";
 import ClaudeRecipe from "./ClaudeRecipe";
-import { getRecipeFromGroq } from "../api/ai";
+import { generateRecipe } from "../api/ai";
 
 export default function MainContent() {
   const [ingredients, setIngredients] = useState([]);
@@ -16,13 +16,13 @@ export default function MainContent() {
       window.scroll({
         top: yCoord,
         behavior: "smooth",
-      })
+      });
     }
   }, [recipe]);
 
   async function getRecipe() {
-    const recipeMarkdown = await getRecipeFromGroq(ingredients);
-    setRecipe(recipeMarkdown);
+    const data = await generateRecipe(ingredients);
+    setRecipe(data.recipe);
   }
 
   function addIngredient(formData) {

@@ -1,6 +1,8 @@
 export default function IngredientsList(props) {
   const ingredientsListItems = props.ingredients.map((ingredient) => (
-    <li key={ingredient}>{ingredient[0].toUpperCase() + ingredient.slice(1)}</li>
+    <li key={ingredient}>
+      {ingredient[0].toUpperCase() + ingredient.slice(1)}
+    </li>
   ));
   return (
     <>
