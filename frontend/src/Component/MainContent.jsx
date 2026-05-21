@@ -5,8 +5,10 @@ import { generateRecipe } from "../api/ai";
 
 export default function MainContent() {
   const [ingredients, setIngredients] = useState([]);
-
   const [recipe, setRecipe] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const recipeSection = useRef(null);
 
   useEffect(() => {
@@ -21,8 +23,21 @@ export default function MainContent() {
   }, [recipe]);
 
   async function getRecipe() {
-    const data = await generateRecipe(ingredients);
-    setRecipe(data.recipe);
+    setLoading(true);
+    setError("");
+    setRecipe("");
+
+    await generateRecipe(ingredients)
+    .then((data) => {
+      setRecipe(data.recipe);
+    })
+    .catch((err) => {
+      setError("Oops! Something went wrong in the kitchen. Please try again");
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+
   }
 
   function addIngredient(formData) {
@@ -47,9 +62,26 @@ export default function MainContent() {
             ref={recipeSection}
             ingredients={ingredients}
             getRecipe={getRecipe}
+            loading={loading}
           />
         )}
-        {recipe && <ClaudeRecipe recipe={recipe} />}
+
+        {/* loading */}
+        {loading && (
+          <p className="recipe-loading-msg">
+            👨‍🍳 Chef Claude is cooking your recipe, please wait...
+          </p>
+        )}
+
+        {/* Error */}
+        {error && (
+          <div className="recipe-error">
+            <p>{error}</p>
+            {/* <button onClick={getRecipe}>Try Again</button> */}
+          </div>
+        )}
+
+        {recipe && !loading && <ClaudeRecipe recipe={recipe} />}
       </main>
     </>
   );

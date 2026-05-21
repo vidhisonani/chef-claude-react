@@ -4,6 +4,7 @@ export default function IngredientsList(props) {
       {ingredient[0].toUpperCase() + ingredient.slice(1)}
     </li>
   ));
+
   return (
     <>
       <section>
@@ -17,7 +18,13 @@ export default function IngredientsList(props) {
               <h3>Ready for a recipe?</h3>
               <p>Generate a recipe from your list of ingredients.</p>
             </div>
-            <button onClick={props.getRecipe}>Get a recipe</button>
+            <button
+              onClick={props.getRecipe}
+              disabled={props.loading}
+              className={props.loading ? "btn-loading" : ""}
+            >
+              {props.loading ? "⏳ Generating..." : "Get a recipe"}
+            </button>
           </div>
         )}
       </section>
