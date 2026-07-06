@@ -102,7 +102,7 @@ app.post("/api/recipe", async (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`\nKitchen is open on http://localhost:${PORT}`);
-  console.log(`Groq key loaded: ${GROQ_API_KEY ? "✅ Yes" : "❌ MISSING — check .env!"}\n`);
+  console.log(`Groq key loaded: ${GROQ_API_KEY ? "Connection Established" : "Connection Failed"}\n`);
 });
 
 module.exports = app;

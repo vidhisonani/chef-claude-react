@@ -2,12 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import IngredientsList from "./IngredientsList";
 import ClaudeRecipe from "./ClaudeRecipe";
 import { generateRecipe } from "../api/ai";
+import { Plus } from "lucide-react";
 
 export default function MainContent() {
   const [ingredients, setIngredients] = useState([]);
   const [recipe, setRecipe] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [ingredientError, setIngredientError] = useState("");
 
   const recipeSection = useRef(null);
 
@@ -28,35 +30,51 @@ export default function MainContent() {
     setRecipe("");
 
     await generateRecipe(ingredients)
-    .then((data) => {
-      setRecipe(data.recipe);
-    })
-    .catch((err) => {
-      setError("Oops! Something went wrong in the kitchen. Please try again");
-    })
-    .finally(() => {
-      setLoading(false);
-    });
+      .then((data) => {
+        setRecipe(data.recipe);
+      })
+      .catch((err) => {
+        setError("Oops! Something went wrong in the kitchen. Please try again");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
 
   }
 
   function addIngredient(formData) {
-    const newIngredient = formData.get("ingredient");
-    setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
+    const newIngredient = formData.get("ingredient").trim();
+    if (ingredients.includes(newIngredient)) {
+      setIngredientError("Ingredient already added");
+      return;
+    }
+    if (newIngredient !== "") {
+      setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
+      if (ingredientError) {
+        setIngredientError("");
+      }
+    }
   }
 
   return (
     <>
-      <main>
-        <form action={addIngredient} className="add-ingredient-form">
+      <main className="pt-[30px] pb-2.5 px-[30px] ">
+        <form action={addIngredient} className="flex flex-col gap-y-3 gap-x-3 w-full max-w-[500px] mx-auto my-0 md:flex-none md:flex md:flex-row md:gap-x-3">
           <input
             type="text"
             aria-label="Add ingredient"
             placeholder="e.g. oregano"
             name="ingredient"
-          />
-          <button>Add Ingredient</button>
+            required
+            className="flex-1 border border-gray-300 shadow-input min-w-0 px-2 py-2 rounded-md border-solid bg-white" />
+          <button
+           className="inline-flex items-center justify-center gap-1.5 bg-charcoal text-cream font-medium text-sm cursor-pointer px-5 py-[9px] rounded-md transition-colors duration-500 hover:bg-charcoal-hover"
+          ><Plus size={16} strokeWidth={2.5} /> Add Ingredient
+          </button>
         </form>
+
+        {ingredientError && <p className="text-center text-red-500 mt-4">{ingredientError}</p>}
+
         {ingredients.length > 0 && (
           <IngredientsList
             ref={recipeSection}
@@ -68,16 +86,15 @@ export default function MainContent() {
 
         {/* loading */}
         {loading && (
-          <p className="recipe-loading-msg">
+          <p className="text-center italic my-4">
             👨‍🍳 Chef Claude is cooking your recipe, please wait...
           </p>
         )}
 
         {/* Error */}
         {error && (
-          <div className="recipe-error">
+          <div className="text-center text-red-500 my-4">
             <p>{error}</p>
-            {/* <button onClick={getRecipe}>Try Again</button> */}
           </div>
         )}
 

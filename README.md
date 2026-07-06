@@ -15,7 +15,7 @@ The project started as a frontend-only learning exercise and was later refactore
 - Vegetarian-safe logic *(recipe stays vegetarian unless non-veg ingredients are detected)*
 - Clean Markdown output rendered in the UI
 - Secure API key handling via backend (key never exposed to browser)
-- Responsive UI
+- Fully responsive UI, styled with Tailwind CSS
 
 ---
 
@@ -25,7 +25,7 @@ The project started as a frontend-only learning exercise and was later refactore
 - **React** (Vite)
 - **JavaScript (ES6+)**
 - **react-markdown**
-- **CSS3**
+- **Tailwind CSS v4**
 
 ### Backend
 - **Node.js**
@@ -42,6 +42,7 @@ The project started as a frontend-only learning exercise and was later refactore
 - Prompt engineering to control AI output
 - Rendering Markdown safely in React
 - Managing async state, loading, and errors
+- Migrating a hand-written CSS design system to Tailwind CSS v4 (`@theme` design tokens, `@layer components`, and targeting third-party-rendered markup with arbitrary variants)
 
 **Backend & Full-Stack**
 - Building a REST API with Node.js + Express
