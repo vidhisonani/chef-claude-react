@@ -67,24 +67,24 @@ export default function ClaudeRecipe(props) {
       <div ref={recipeRef} className="bg-white p-4 rounded-md">
         <ReactMarkdown>{props.recipe}</ReactMarkdown>
       </div>
-      <div className="flex flex-wrap items-center gap-3 mt-8 pt-6 border-t border-slate-200">
+      <div className="flex flex-col sm:flex-row gap-3 mt-8 pt-6 border-t border-slate-200">
         <button
           onClick={copyRecipe}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-recipe-bg text-slate-600 hover:bg-slate-200 transition-colors duration-200 cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-recipe-bg text-slate-600 hover:bg-slate-200 transition-colors duration-200 cursor-pointer w-full sm:w-auto"
         >
           {copied ? <Check size={16} /> : <Copy size={16} />}
           {copied ? "Copied!" : "Copy Recipe"}
         </button>
         <button
           onClick={saveAsImage}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-recipe-bg text-slate-600 hover:bg-slate-200 transition-colors duration-200 cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-recipe-bg text-slate-600 hover:bg-slate-200 transition-colors duration-200 cursor-pointer w-full sm:w-auto"
         >
           <ImageDown size={16} />
           Save as Image
         </button>
         <button
           onClick={handlePrint}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-terracotta text-offwhite hover:bg-terracotta-hover transition-colors duration-200 cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-terracotta text-offwhite hover:bg-terracotta-hover transition-colors duration-200 cursor-pointer w-full sm:w-auto"
         >
           <FileDown size={16} />
           Download PDF
