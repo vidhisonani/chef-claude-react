@@ -11,8 +11,14 @@ The project started as a frontend-only learning exercise and was later refactore
 ## 🚀 Features
 
 - Add multiple ingredients dynamically
+- Delete ingredients individually
+- Duplicate and empty input prevention
+- Serving size selector (1 / 2 / 4 / 6 people)
 - Generate recipes using Groq AI (Llama 3.1)
 - Vegetarian-safe logic *(recipe stays vegetarian unless non-veg ingredients are detected)*
+- Copy recipe to clipboard
+- Save recipe as Image
+- Download recipe as PDF
 - Clean Markdown output rendered in the UI
 - Secure API key handling via backend (key never exposed to browser)
 - Fully responsive UI, styled with Tailwind CSS
@@ -26,6 +32,8 @@ The project started as a frontend-only learning exercise and was later refactore
 - **JavaScript (ES6+)**
 - **react-markdown**
 - **Tailwind CSS v4**
+- **html2canvas** · **react-to-print**
+- **lucide-react**
 
 ### Backend
 - **Node.js**
@@ -43,6 +51,8 @@ The project started as a frontend-only learning exercise and was later refactore
 - Rendering Markdown safely in React
 - Managing async state, loading, and errors
 - Migrating a hand-written CSS design system to Tailwind CSS v4 (`@theme` design tokens, `@layer components`, and targeting third-party-rendered markup with arbitrary variants)
+- Handling form state (controlled inputs, duplicate prevention, dynamic arrays)
+- Working with clipboard APIs, canvas, and print functionality
 
 **Backend & Full-Stack**
 - Building a REST API with Node.js + Express
