@@ -10,7 +10,7 @@ export default function MainContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [ingredientError, setIngredientError] = useState("");
-
+  const [servings, setServings] = useState(2);
   const recipeSection = useRef(null);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function MainContent() {
     setError("");
     setRecipe("");
 
-    await generateRecipe(ingredients)
+    await generateRecipe(ingredients, servings)
       .then((data) => {
         setRecipe(data.recipe);
       })
@@ -43,17 +43,21 @@ export default function MainContent() {
   }
 
   function addIngredient(formData) {
-    const newIngredient = formData.get("ingredient").trim();
+    const newIngredient = formData.get("ingredient").trim().toLowerCase();
+    if (newIngredient === "") {
+      setIngredientError("Please enter a valid ingredient");
+      return;
+    }
     if (ingredients.includes(newIngredient)) {
       setIngredientError("Ingredient already added");
       return;
     }
-    if (newIngredient !== "") {
-      setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
-      if (ingredientError) {
-        setIngredientError("");
-      }
-    }
+    setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
+    setIngredientError("");
+  }
+
+  function removeIngredient(ingredientToRemove) {
+    setIngredients(prev => prev.filter(i => i !== ingredientToRemove));
   }
 
   return (
@@ -68,18 +72,37 @@ export default function MainContent() {
             required
             className="flex-1 border border-gray-300 shadow-input min-w-0 px-2 py-2 rounded-md border-solid bg-white" />
           <button
-           className="inline-flex items-center justify-center gap-1.5 bg-charcoal text-cream font-medium text-sm cursor-pointer px-5 py-[9px] rounded-md transition-colors duration-500 hover:bg-charcoal-hover"
+            className="inline-flex items-center justify-center gap-1.5 bg-charcoal text-cream font-medium text-sm cursor-pointer px-5 py-[9px] rounded-md transition-colors duration-500 hover:bg-charcoal-hover"
           ><Plus size={16} strokeWidth={2.5} /> Add Ingredient
           </button>
         </form>
 
+        <div className="flex items-center gap-2 mt-3 max-w-[500px] mx-auto justify-center">
+          <span className="text-sm text-slate-500">Serves:</span>
+          {[1, 2, 4, 6].map(n => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => setServings(n)}
+              className={`w-9 h-9 rounded-md text-sm font-medium transition-colors duration-200 cursor-pointer
+              ${servings === n
+                  ? "bg-charcoal text-cream"
+                  : "bg-recipe-bg text-slate-600 hover:bg-slate-200"
+                }`}
+            >
+              {n}
+            </button>
+          ))}
+        </div>
         {ingredientError && <p className="text-center text-red-500 mt-4">{ingredientError}</p>}
 
         {ingredients.length > 0 && (
           <IngredientsList
             ref={recipeSection}
             ingredients={ingredients}
+            servings={servings}
             getRecipe={getRecipe}
+            removeIngredient={removeIngredient}
             loading={loading}
           />
         )}
@@ -97,7 +120,6 @@ export default function MainContent() {
             <p>{error}</p>
           </div>
         )}
-
         {recipe && !loading && <ClaudeRecipe recipe={recipe} />}
       </main>
     </>

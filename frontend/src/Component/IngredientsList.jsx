@@ -1,7 +1,14 @@
+import { X } from 'lucide-react';
+
 export default function IngredientsList(props) {
   const ingredientsListItems = props.ingredients.map((ingredient) => (
     <li key={ingredient} className="text-slate-600 leading-7">
-      {ingredient[0].toUpperCase() + ingredient.slice(1)}
+      <div className='flex justify-between items-center'>
+        {ingredient[0].toUpperCase() + ingredient.slice(1)}
+        <button onClick={() => props.removeIngredient(ingredient)} className="ml-2 text-slate-600 leading-7 cursor-pointer hover:text-red-500 transition-colors duration-500">
+          <X size={18} strokeWidth={2.75} />
+        </button>
+      </div>
     </li>
   ));
 

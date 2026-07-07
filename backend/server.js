@@ -23,8 +23,8 @@ app.post("/api/recipe", async (req, res) => {
 
   try {
     // 1. Get ingredients from the request body
-    const { ingredients } = req.body;
-
+    const { ingredients, servings } = req.body;
+    console.log(req.body.servings)
     if (!ingredients || ingredients.length === 0) {
       return res.status(400).json({ error: "No ingredients provided!" });
     }
@@ -39,10 +39,11 @@ app.post("/api/recipe", async (req, res) => {
 
     // 3. Build the prompt for Groq
     const prompt = `
-      You are a professional chef. Create a detailed recipe using ONLY these ingredients
-      (you may add basic pantry staples like salt, oil, water): ${ingredientsList}.
+    You are a professional chef. Create a detailed recipe using SOME or ALL of these ingredients — use what makes sense for the dish, you don't have to use everything.
+    This recipe MUST serve EXACTLY ${servings} person/people — do not give a range, use the exact number.
+    (you may add basic pantry staples like salt, oil, water): ${ingredientsList}. 
 
-      ${isVeg
+    ${isVeg
         ? "IMPORTANT: Keep this recipe strictly VEGETARIAN. No meat, fish, or eggs."
         : "Feel free to use the non-vegetarian ingredients provided."
       }
@@ -51,7 +52,7 @@ app.post("/api/recipe", async (req, res) => {
 
       ## [Creative Recipe Name]
 
-      **Prep time:** X mins | **Cook time:** X mins | **Serves:** X
+      **Prep time:** X mins | **Cook time:** X mins | **Serves:** ${servings}
 
       ### Ingredients
       - ingredient with quantity
