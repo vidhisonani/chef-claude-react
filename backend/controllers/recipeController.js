@@ -1,5 +1,5 @@
 const Recipe = require('../models/Recipe');
-
+const jwt = require('jsonwebtoken');
 
 const nonVegKeywords = [
   "chicken", "mutton", "beef", "pork", "fish", "egg", "eggs",
@@ -68,8 +68,19 @@ async function generateRecipe(req, res) {
 
     const data = await groqResponse.json();
     const recipe = data.choices[0].message.content;
+    const authHeader = req.headers.authorization;
+    let userId = null;
 
-    await Recipe.create({ ingredients, servings, recipe, isVeg });
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      try {
+        const token = authHeader.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        userId = decoded.id;
+      } catch {
+        userId = null;
+      }
+    }
+    await Recipe.create({ userId, ingredients, servings, recipe, isVeg });
     res.json({ recipe, isVeg });
 
   } catch (error) {
@@ -78,4 +89,18 @@ async function generateRecipe(req, res) {
   }
 }
 
-module.exports = { generateRecipe };
+async function getHistory(req, res) {
+  try {
+    const recipes = await Recipe.find({ userId: req.user.id })
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("recipe ingredients createdAt isVeg");
+
+    res.json({ recipes });
+  } catch (error) {
+    console.error("History error:", error);
+    res.status(500).json({ error: "Could not fetch history!" });
+  }
+}
+
+module.exports = { generateRecipe, getHistory };

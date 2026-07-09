@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const rateLimit = require("express-rate-limit");
-const { generateRecipe } = require("../controllers/recipeController");
+const { generateRecipe, getHistory } = require("../controllers/recipeController");
+const { protect } = require("../middleware/authMiddleware");
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -13,5 +14,6 @@ const limiter = rateLimit({
 
 router.use(limiter);
 router.post("/", generateRecipe);
+router.get("/history", protect, getHistory);
 
 module.exports = router;
