@@ -39,7 +39,6 @@ export default function MainContent() {
       .finally(() => {
         setLoading(false);
       });
-
   }
 
   function addIngredient(formData) {
@@ -57,44 +56,55 @@ export default function MainContent() {
   }
 
   function removeIngredient(ingredientToRemove) {
-    setIngredients(prev => prev.filter(i => i !== ingredientToRemove));
+    setIngredients((prev) => prev.filter((i) => i !== ingredientToRemove));
   }
 
   return (
     <>
       <main className="pt-[30px] pb-2.5 px-[30px] ">
-        <form action={addIngredient} className="flex flex-col gap-y-3 gap-x-3 w-full max-w-[500px] mx-auto my-0 md:flex-none md:flex md:flex-row md:gap-x-3">
+        {ingredients.length < 4 && (
+          <p className="text-center mb-2 font-medium text-xl text-terracotta">
+            Add at least 4 ingredients to get a recipe.
+          </p>
+        )}
+        <form
+          action={addIngredient}
+          className="flex flex-col gap-y-3 gap-x-3 w-full max-w-[500px] mx-auto my-0 md:flex-none md:flex md:flex-row md:gap-x-3"
+        >
           <input
             type="text"
             aria-label="Add ingredient"
             placeholder="e.g. oregano"
             name="ingredient"
             required
-            className="flex-1 border border-gray-300 shadow-input min-w-0 px-2 py-2 rounded-md border-solid bg-white" />
-          <button
-            className="inline-flex items-center justify-center gap-1.5 bg-charcoal text-cream font-medium text-sm cursor-pointer px-5 py-[9px] rounded-md transition-colors duration-500 hover:bg-charcoal-hover"
-          ><Plus size={16} strokeWidth={2.5} /> Add Ingredient
+            className="flex-1 border border-gray-300 shadow-input min-w-0 px-2 py-2 rounded-md border-solid bg-white"
+          />
+          <button className="inline-flex items-center justify-center gap-1.5 bg-charcoal text-cream font-medium text-sm cursor-pointer px-5 py-[9px] rounded-md transition-colors duration-500 hover:bg-charcoal-hover">
+            <Plus size={16} strokeWidth={2.5} /> Add Ingredient
           </button>
         </form>
 
         <div className="flex items-center gap-2 mt-3 max-w-[500px] mx-auto justify-center">
           <span className="text-sm text-slate-500">Serves:</span>
-          {[1, 2, 4, 6].map(n => (
+          {[1, 2, 4, 6].map((n) => (
             <button
               key={n}
               type="button"
               onClick={() => setServings(n)}
               className={`w-9 h-9 rounded-md text-sm font-medium transition-colors duration-200 cursor-pointer
-              ${servings === n
+              ${
+                servings === n
                   ? "bg-charcoal text-cream"
                   : "bg-recipe-bg text-slate-600 hover:bg-slate-200"
-                }`}
+              }`}
             >
               {n}
             </button>
           ))}
         </div>
-        {ingredientError && <p className="text-center text-red-500 mt-4">{ingredientError}</p>}
+        {ingredientError && (
+          <p className="text-center text-red-500 mt-4">{ingredientError}</p>
+        )}
 
         {ingredients.length > 0 && (
           <IngredientsList
