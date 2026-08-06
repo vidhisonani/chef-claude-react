@@ -70,7 +70,7 @@ export default function RecipeHistory() {
   return (
     <div className="mt-12 max-w-2xl mx-auto px-4">
       <h2 className="text-2xl font-semibold text-slate-800 mb-4">
-        Recent Recipes
+        Recipes History
       </h2>
 
       {!user ? (

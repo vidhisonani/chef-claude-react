@@ -97,7 +97,7 @@ async function getHistory(req, res) {
     }
     const recipes = await Recipe.find({ userId: userId })
       .sort({ createdAt: -1 })
-      .limit(5)
+      // .limit(5)
       .select("recipe ingredients createdAt isVeg isFavourite");
 
     res.json({ recipes });
