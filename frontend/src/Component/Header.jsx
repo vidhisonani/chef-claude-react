@@ -21,7 +21,7 @@ function Header() {
             <span className="text-sm text-slate-600 hidden md:block">{user.name}</span>
             <button
               onClick={logout}
-              className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer hover:bg-gray-700 transition-colors"
+              className="bg-charcoal text-white px-4 py-2 rounded cursor-pointer hover:bg-gray-700 transition-colors"
             >
               Logout
             </button>
@@ -29,7 +29,7 @@ function Header() {
         ) : (
           <button
             onClick={login}
-            className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer hover:bg-gray-700 transition-colors"
+            className="bg-charcoal text-white px-4 py-2 rounded cursor-pointer hover:bg-gray-700 transition-colors"
           >
             Login with Google
           </button>

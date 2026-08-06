@@ -68,7 +68,7 @@ export default function RecipeHistory() {
     );
   }
   return (
-    <div className="mt-12 max-w-2xl mx-auto px-4">
+    <div className="mt-12 max-w-2xl mx-auto px-4 min-h-screen">
       <h2 className="text-2xl font-semibold text-slate-800 mb-4">
         Recipes History
       </h2>
