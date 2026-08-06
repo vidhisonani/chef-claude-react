@@ -1,6 +1,7 @@
+import { forwardRef } from "react";
 import { Trash } from "lucide-react";
 
-export default function IngredientsList(props) {
+const IngredientsList = forwardRef(function IngredientsList(props, ref) {
   const ingredientsListItems = props.ingredients.map((ingredient) => (
     <li key={ingredient} className="text-slate-600 leading-7">
       <div className="flex justify-between items-center">
@@ -26,7 +27,7 @@ export default function IngredientsList(props) {
         </ul>
         {props.ingredients.length > 3 && (
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 rounded-lg bg-recipe-bg px-7 py-7">
-            <div ref={props.ref}>
+            <div ref={ref}>
               <h3 className="text-lg font-medium text-slate-800 leading-6 mb-4">
                 Ready for a recipe?
               </h3>
@@ -50,4 +51,6 @@ export default function IngredientsList(props) {
       </section>
     </>
   );
-}
+});
+
+export default IngredientsList;

@@ -3,6 +3,7 @@ import IngredientsList from "./IngredientsList";
 import ClaudeRecipe from "./ClaudeRecipe";
 import { generateRecipe } from "../api/ai";
 import { Plus } from "lucide-react";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 export default function MainContent() {
   const [ingredients, setIngredients] = useState([]);
@@ -12,7 +13,7 @@ export default function MainContent() {
   const [ingredientError, setIngredientError] = useState("");
   const [servings, setServings] = useState(2);
   const recipeSection = useRef(null);
-
+  useDocumentTitle("Home | Chef Claude");
   useEffect(() => {
     if (recipe !== "" && recipeSection.current !== null) {
       // recipeSection.current.scrollIntoView({behavior: "smooth"});
@@ -33,7 +34,7 @@ export default function MainContent() {
       .then((data) => {
         setRecipe(data.recipe);
       })
-      .catch((err) => {
+      .catch(() => {
         setError("Oops! Something went wrong in the kitchen. Please try again");
       })
       .finally(() => {
@@ -61,14 +62,19 @@ export default function MainContent() {
 
   return (
     <>
-      <main className="pt-[30px] pb-2.5 px-[30px] ">
+      <main className="pt-[30px] pb-2.5 px-[30px] min-h-screen bg-cream">
         {ingredients.length < 4 && (
           <p className="text-center mb-2 font-medium text-xl text-terracotta">
             Add at least 4 ingredients to get a recipe.
           </p>
         )}
         <form
-          action={addIngredient}
+          onSubmit={(event) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            addIngredient(formData);
+            event.currentTarget.reset();
+          }}
           className="flex flex-col gap-y-3 gap-x-3 w-full max-w-[500px] mx-auto my-0 md:flex-none md:flex md:flex-row md:gap-x-3"
         >
           <input

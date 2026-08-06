@@ -10,6 +10,10 @@ const recipeSchema = new mongoose.Schema({
   servings: Number,
   recipe: String,
   isVeg: Boolean,
+  isFavourite: {
+    type: Boolean,
+    default: false
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Recipe", recipeSchema);

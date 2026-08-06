@@ -91,10 +91,14 @@ async function generateRecipe(req, res) {
 
 async function getHistory(req, res) {
   try {
-    const recipes = await Recipe.find({ userId: req.user.id })
+    const userId = req.user.id;
+    if(!userId){
+      return res.status(401).json({ error: "Unauthorized access!" });
+    }
+    const recipes = await Recipe.find({ userId: userId })
       .sort({ createdAt: -1 })
       .limit(5)
-      .select("recipe ingredients createdAt isVeg");
+      .select("recipe ingredients createdAt isVeg isFavourite");
 
     res.json({ recipes });
   } catch (error) {
@@ -103,4 +107,24 @@ async function getHistory(req, res) {
   }
 }
 
-module.exports = { generateRecipe, getHistory };
+async function toggleFavourite(req, res) {
+  try {
+    const recipe = await Recipe.findOne({ 
+      _id: req.params.id, 
+      userId: req.user.id
+    });
+
+    if (!recipe) {
+      return res.status(404).json({ error: "Recipe not found!" });
+    }
+
+    recipe.isFavourite = !recipe.isFavourite;
+    await recipe.save();
+
+    res.json({ isFavourite: recipe.isFavourite });
+  } catch (error) {
+    res.status(500).json({ error: "Could not update favourite!" });
+  }
+}
+
+module.exports = { generateRecipe, getHistory, toggleFavourite };

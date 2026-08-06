@@ -9,12 +9,17 @@ export default function RecipeActions({ recipe }) {
   const recipeRef = useRef(null);
 
   function copyRecipe() {
-    navigator.clipboard.writeText(recipe);
+    if (!recipe) return;
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(recipe);
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
 
   async function saveAsImage() {
+    if (!recipeRef.current) return;
+
     const canvas = await html2canvas(recipeRef.current, {
       scale: 2,
       useCORS: true,

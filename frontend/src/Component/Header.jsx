@@ -5,10 +5,10 @@ function Header() {
   const { user, login, logout } = useAuth();
 
   return (
-    <header className="flex justify-between items-center gap-2.5 bg-white shadow-sm h-20 px-6">
+    <header className="flex sm:flex-cols justify-between items-center gap-2.5 bg-white shadow-sm h-20 px-6">
       <div className="flex justify-center items-center gap-2.5">
-        <img className="w-10" src={ChefClaudeLogo} alt="Chef Claude Logo" />
-        <h1 className="text-4xl font-normal">Chef Claude</h1>
+        <img className="w-7 sm:w-10" src={ChefClaudeLogo} alt="Chef Claude Logo" />
+        <h1 className="text-xl sm:text-4xl font-normal">Chef Claude</h1>
       </div>
       <div className="flex items-center gap-3 px-6">
         {user ? (
