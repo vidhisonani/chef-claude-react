@@ -15,7 +15,7 @@ The project started as a frontend-only learning exercise and was later refactore
 - Delete ingredients individually
 - Duplicate and empty input prevention
 - Serving size selector (1 / 2 / 4 / 6 people)
-- Generate recipes using Groq AI (Llama 3.1)
+- Generate recipes using Groq AI (openai/gpt-oss-120b)
 - Vegetarian-safe logic *(recipe stays vegetarian unless non-veg ingredients are detected)*
 
 ### Export & Share
@@ -54,7 +54,7 @@ The project started as a frontend-only learning exercise and was later refactore
 - **MongoDB** (Atlas) + **Mongoose**
 - **Passport.js** (Google OAuth 2.0)
 - **JWT** (jsonwebtoken)
-- **Groq AI API** (llama-3.1-8b-instant)
+- **Groq AI API** (openai/gpt-oss-120b)
 - **express-rate-limit** · **dotenv** · **cors**
 
 ---
